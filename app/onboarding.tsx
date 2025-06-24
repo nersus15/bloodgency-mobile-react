@@ -18,6 +18,7 @@ interface Slide {
   title: string;
   desc: string;
   image?: ImageSourcePropType;
+  subttileLogo?: string;
 }
 
 const slides: Slide[] = [
@@ -31,12 +32,13 @@ const slides: Slide[] = [
     key: "2",
     title: "Temukan Pendonor",
     desc: "Cari dan temukan pendonor darah dengan mudah.",
-    image: require("@/assets/images/bro1.png"),
+    image: require("@/assets/images/bro2.png"),
   },
   {
     key: "3",
     title: "Bantu Sesama",
     desc: "Jadilah pahlawan dengan satu tetes darahmu.",
+    image: require("@/assets/icons/logo-blood-warna.png"),
   },
 ];
 
@@ -50,8 +52,6 @@ export default function Onboarding(): JSX.Element {
   const next = () => {
     if (index < slides.length - 1) {
       flatListRef.current?.scrollToIndex({ index: index + 1 });
-    } else {
-      router.replace("/login");
     }
   };
 
@@ -79,23 +79,30 @@ export default function Onboarding(): JSX.Element {
         )}
       />
 
-      <View style={styles.dots}>
-        {slides.map((_, i) => (
-          <View
-            key={i}
+      {/* Conditional Buttons */}
+      {index < slides.length - 1 ? (
+        <TouchableOpacity style={styles.button} onPress={next}>
+          <Text style={styles.buttonText}>Lanjut</Text>
+        </TouchableOpacity>
+      ) : (
+        <View style={styles.authButtons}>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: "#FF2156" }]}
+            onPress={() => router.replace("/login")}
+          >
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
             style={[
-              styles.dot,
-              { backgroundColor: i === index ? "#e74c3c" : "#ccc" },
+              styles.button,
+              { backgroundColor: "#FFFFFF", marginTop: 10 },
             ]}
-          />
-        ))}
-      </View>
-
-      <TouchableOpacity style={styles.button} onPress={next}>
-        <Text style={{ color: "white" }}>
-          {index === slides.length - 1 ? "Mulai" : "Lanjut"}
-        </Text>
-      </TouchableOpacity>
+            onPress={() => router.replace("/register")}
+          >
+            <Text style={[styles.buttonTextRegister]}>Register</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 }
@@ -141,6 +148,19 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     borderRadius: 8,
     alignItems: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "600",
+    fontSize: 16,
+  },
+  buttonTextRegister: {
+    color: "#FF2156",
+    fontWeight: "600",
+    fontSize: 16,
+  },
+  authButtons: {
     marginBottom: 40,
+    paddingHorizontal: 40,
   },
 });
