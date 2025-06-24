@@ -44,7 +44,7 @@ const slides: Slide[] = [
 
 const { width } = Dimensions.get("window");
 
-export default function Onboarding(): JSX.Element {
+export default function Onboarding() {
   const router = useRouter();
   const flatListRef = useRef<FlatList<Slide>>(null);
   const [index, setIndex] = useState<number>(0);
@@ -95,7 +95,7 @@ export default function Onboarding(): JSX.Element {
           <TouchableOpacity
             style={[
               styles.button,
-              { backgroundColor: "#FFFFFF", marginTop: 10 },
+              { backgroundColor: "#FFFFFF", marginTop: -20 },
             ]}
             onPress={() => router.replace("/register")}
           >
@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 40,
     borderRadius: 8,
     alignItems: "center",
+    marginBottom: 40,
   },
   buttonText: {
     color: "white",
